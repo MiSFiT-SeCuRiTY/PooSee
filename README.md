@@ -3,7 +3,8 @@
 
 # 🎯 PooSee
 
-<img width="1024" height="1024" alt="possee" src="https://github.com/user-attachments/assets/360dfede-8a60-4d07-8145-878da28bbb42" />
+<img width="438" height="422" alt="possee-Photoroom" src="https://github.com/user-attachments/assets/778b7e4f-8b03-4002-a6c5-192de00c2439" />
+
 
 ### **Multi-Session Browser Testing Utility for Windows**
 
