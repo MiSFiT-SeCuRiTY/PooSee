@@ -1,0 +1,85 @@
+﻿<Window x:Class="PooSee.Views.PresetWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PooSee — Presets"
+        Icon="pack://application:,,,/Assets/app.ico"
+        Width="560" Height="620"
+        MinWidth="480" MinHeight="520"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource WindowBackgroundBrush}"
+        Foreground="{StaticResource TextPrimaryBrush}"
+        FontFamily="Segoe UI">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Presets"
+                   Style="{StaticResource H1Text}"
+                   Margin="24,24,24,12"/>
+
+        <Border Grid.Row="1"
+                Style="{StaticResource Card}"
+                Margin="24,0,24,12"
+                Padding="6">
+            <ListBox ItemsSource="{Binding Presets}"
+                     SelectedItem="{Binding Selected, Mode=TwoWay}"
+                     Background="Transparent"
+                     BorderThickness="0"
+                     Foreground="{StaticResource TextPrimaryBrush}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="6,8">
+                            <TextBlock Style="{StaticResource BodyText}" Text="{Binding Name}"/>
+                            <TextBlock Style="{StaticResource MutedText}">
+                                <Run Text="{Binding Jobs.Count, Mode=OneWay}"/>
+                                <Run Text="URLs · "/>
+                                <Run Text="{Binding SessionCount, Mode=OneWay}"/>
+                                <Run Text=" sessions"/>
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    Margin="24,0,24,16">
+            <Button Content="Save current as preset"
+                    Style="{StaticResource PrimaryButton}"
+                    Command="{Binding SaveCurrentAsPresetCommand}"
+                    Margin="0,0,8,0"/>
+            <Button Content="Load"
+                    Style="{StaticResource SecondaryButton}"
+                    Command="{Binding LoadSelectedCommand}"
+                    IsEnabled="{Binding HasSelection, Mode=OneWay}"
+                    Margin="0,0,8,0"/>
+            <Button Content="Rename"
+                    Style="{StaticResource SecondaryButton}"
+                    Command="{Binding RenameSelectedCommand}"
+                    IsEnabled="{Binding HasSelection, Mode=OneWay}"
+                    Margin="0,0,8,0"/>
+            <Button Content="Delete"
+                    Style="{StaticResource DangerButton}"
+                    Command="{Binding DeleteSelectedCommand}"
+                    IsEnabled="{Binding HasSelection, Mode=OneWay}"/>
+        </StackPanel>
+
+        <Border Grid.Row="3"
+                Background="{StaticResource PanelBackgroundBrush}"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="16,12">
+            <Button Content="Close"
+                    Style="{StaticResource SecondaryButton}"
+                    HorizontalAlignment="Right"
+                    Click="Close_Click"
+                    MinWidth="90"/>
+        </Border>
+    </Grid>
+</Window>

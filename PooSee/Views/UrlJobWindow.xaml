@@ -1,0 +1,85 @@
+﻿<Window x:Class="PooSee.Views.UrlJobWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="URL Job"
+        Icon="pack://application:,,,/Assets/app.ico"
+        Width="460" Height="560"
+        MinWidth="420" MinHeight="480"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResize"
+        Background="{StaticResource WindowBackgroundBrush}"
+        Foreground="{StaticResource TextPrimaryBrush}"
+        FontFamily="Segoe UI">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Padding="24,24,24,0">
+            <StackPanel>
+
+                <TextBlock x:Name="HeaderText" Text="Add URL Job"
+                           Style="{StaticResource H1Text}" Margin="0,0,0,20"/>
+
+                <TextBlock Text="URL" Style="{StaticResource LabelText}"/>
+                <TextBox x:Name="UrlBox" Style="{StaticResource InputBox}" Margin="0,0,0,14"/>
+
+                <TextBlock Text="Friendly name (optional)" Style="{StaticResource LabelText}"/>
+                <TextBox x:Name="NameBox" Style="{StaticResource InputBox}" Margin="0,0,0,14"/>
+
+                <Grid Margin="0,0,0,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Minimum interval (seconds)" Style="{StaticResource LabelText}"/>
+                        <TextBox x:Name="MinBox" Style="{StaticResource InputBox}" Text="30"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Maximum interval (seconds)" Style="{StaticResource LabelText}"/>
+                        <TextBox x:Name="MaxBox" Style="{StaticResource InputBox}" Text="60"/>
+                    </StackPanel>
+                </Grid>
+
+                <CheckBox x:Name="EnabledBox"
+                          Style="{StaticResource AppCheckBox}"
+                          Content="Enabled"
+                          IsChecked="True"
+                          Margin="0,0,0,16"/>
+
+                <TextBlock x:Name="ErrorText"
+                           Foreground="{StaticResource ErrorBrush}"
+                           FontSize="12"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,12"
+                           Visibility="Collapsed"/>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <Border Grid.Row="1"
+                Background="{StaticResource PanelBackgroundBrush}"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="16,12">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Cancel"
+                        Style="{StaticResource SecondaryButton}"
+                        Click="Cancel_Click"
+                        Margin="0,0,8,0"
+                        IsCancel="True"/>
+                <Button Content="Save"
+                        Style="{StaticResource PrimaryButton}"
+                        Click="Save_Click"
+                        IsDefault="True"
+                        MinWidth="90"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

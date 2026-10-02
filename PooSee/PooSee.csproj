@@ -1,0 +1,71 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<UseWindowsForms>true</UseWindowsForms>
+		<RootNamespace>PooSee</RootNamespace>
+		<AssemblyName>PooSee</AssemblyName>
+		<ApplicationIcon>Assets\app.ico</ApplicationIcon>
+		<Platforms>AnyCPU;x64;ARM64</Platforms>
+		<SelfContained>false</SelfContained>
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
+		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+		<StartupObject>PooSee.App</StartupObject>
+
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<NoWarn>$(NoWarn);IDE0028;IDE0031;IDE0044;IDE0090;IDE0301;IDE0305;IL3000</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Playwright" Version="1.49.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
+		<PackageReference Include="Serilog" Version="4.2.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="Assets\app.ico" Condition="Exists('Assets\app.ico')" />
+		<Resource Include="Assets\logo.svg" Condition="Exists('Assets\logo.svg')" />
+	</ItemGroup>
+
+	<!--
+    Copy the full .playwright driver folder (all node platform subfolders
+    including win32_x64) to both build output and publish output.
+    NuGet resolves to %USERPROFILE%\.nuget\packages\...
+  -->
+	<PropertyGroup>
+		<PlaywrightPackageVersion>1.49.0</PlaywrightPackageVersion>
+		<PlaywrightDriverRoot>$(USERPROFILE)\.nuget\packages\microsoft.playwright\$(PlaywrightPackageVersion)\.playwright</PlaywrightDriverRoot>
+	</PropertyGroup>
+
+	<Target Name="CopyPlaywrightDriver" AfterTargets="Build" Condition="Exists('$(PlaywrightDriverRoot)')">
+		<ItemGroup>
+			<_PlaywrightDriverFiles Include="$(PlaywrightDriverRoot)\**\*"
+									 Exclude="$(PlaywrightDriverRoot)\**\*.pdb" />
+		</ItemGroup>
+		<Copy SourceFiles="@(_PlaywrightDriverFiles)"
+			  DestinationFiles="@(_PlaywrightDriverFiles->'$(OutDir).playwright\%(RecursiveDir)%(Filename)%(Extension)')"
+			  SkipUnchangedFiles="true" />
+	</Target>
+
+	<Target Name="CopyPlaywrightDriverPublish" AfterTargets="Publish" Condition="Exists('$(PlaywrightDriverRoot)')">
+		<ItemGroup>
+			<_PlaywrightPublishFiles Include="$(PlaywrightDriverRoot)\**\*"
+									  Exclude="$(PlaywrightDriverRoot)\**\*.pdb" />
+		</ItemGroup>
+		<Copy SourceFiles="@(_PlaywrightPublishFiles)"
+			  DestinationFiles="@(_PlaywrightPublishFiles->'$(PublishDir).playwright\%(RecursiveDir)%(Filename)%(Extension)')"
+			  SkipUnchangedFiles="true" />
+	</Target>
+
+</Project>
